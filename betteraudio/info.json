@@ -1,0 +1,16 @@
+{
+  "author": [
+    "BluKorvyd"
+  ],
+  "min_bot_version": "3.3.0",
+  "description": "Listen to music in voice chat, now with better controls!",
+  "hidden": false,
+  "install_msg": "Thank you for installing Better Audio!\n You **MUST** load audio to use this (`[p]load audio`)\n Then you can get started with `[p]load betteraudio` and `[p]help betteraudio`",
+  "short": "Listen to music in voice chat",
+  "end_user_data_statement": "This cog expands the core Audio cog without collecting any additional End User Data.\nSee the core End User Data storage for more information",
+  "tags": [
+    "blukorvyd",
+    "blucogs",
+    "audio"
+  ]
+}
