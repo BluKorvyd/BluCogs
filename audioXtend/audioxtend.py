@@ -1,8 +1,18 @@
-from redbot.core.bot import Red
-from redbot.core import commands
-import lavalink
+from pathlib import Path
 
-class BetterAudio(commands.Cog):
+import lavalink
+from red_commons.logging import getLogger
+
+from redbot.core import commands
+from redbot.core.bot import Red
+from redbot.core.i18n import Translator
+
+log = getLogger("red.cogs.BlueKorvyd.AudioXtend")
+
+_ = Translator("Audio", Path(__file__))
+
+
+class AudioXtend(commands.Cog):
     """
     Extension of the Audio cog
     """
@@ -20,26 +30,26 @@ class BetterAudio(commands.Cog):
             ctx.guild.id, await self.audio.config.guild(ctx.guild).dj_enabled()
         )
         if not self.audio._player_check(ctx):
-            return await self.audio.send_embed_msg(ctx, title=("Nothing playing."))
+            return await self.audio.send_embed_msg(ctx, title=_("Nothing playing."))
         player = lavalink.get_player(ctx.guild.id)
         can_skip = await self.audio._can_instaskip(ctx, ctx.author)
         if (not ctx.author.voice or ctx.author.voice.channel != player.channel) and not can_skip:
             return await self.audio.send_embed_msg(
                 ctx,
-                title=("Unable To Move Track"),
-                description=("You must be in the voice channel to move a track."),
+                title=_("Unable To Move Track"),
+                description=_("You must be in the voice channel to move a track."),
             )
         if dj_enabled and not can_skip:
             return await self.audio.send_embed_msg(
                 ctx,
-                title=("Unable To Move Track"),
-                description=("You need the DJ role to move tracks."),
+                title=_("Unable To Move Track"),
+                description=_("You need the DJ role to move tracks."),
             )
         if previous_index > len(player.queue) or previous_index < 1:
             return await self.audio.send_embed_msg(
                 ctx,
-                title=("Unable To Move Track"),
-                description=("Previous song number must be greater than 1 and within the queue limit."),
+                title=_("Unable To Move Track"),
+                description=_("Previous song number must be greater than 1 and within the queue limit."),
             )
         if next_index < 1:
             next_index = 1
@@ -55,8 +65,6 @@ class BetterAudio(commands.Cog):
         description = await self.audio.get_track_description(removed, self.audio.local_folder_current_path)
         await self.audio.send_embed_msg(
             ctx, 
-            title=(
-            "Moved track to position {next_position} in the queue."
-            ).format(next_position=next_index), 
+            title=_("Moved track to position {next_position} in the queue.").format(next_position=next_index), 
             description=description
         )
